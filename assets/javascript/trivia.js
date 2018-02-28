@@ -20,6 +20,7 @@ var triviaMiami = {
 					timeLeft: 15,
 					scoreCorrect: 0,
 					totalQuestions: 10,
+					currQuestion: 0,
 					triviaQuestions: [{one: "Miami is the home to which National Park?",
 									   choices: ["The Everglades", "Monroe", "Cocoplum", "The Sawgrass"],
 									   correctChoice: "a1",
@@ -40,13 +41,6 @@ console.log(triviaMiami.triviaQuestions[0].correctChoice);
 //the answer 
 console.log(triviaMiami.triviaQuestions[0].answer);
 
-var triviaQuestions = [ ["Miami is the home to which National Park?", "The Everglades", "Monroe", "Cocoplum", "The SawGrass", "a1", "The Everglades"], 
-						["In Miami Beach, more than 800 buildings feature this iconic style of architecture:", "Gothic", "Revivalism", "Art Deco", "Streamline Moderne", "Art Deco"]
-					  ];
-
-var timeLeft = 15;
-var scoreCorrect = 0;
-var totalQuestions = 10;
 
 //hides choices from view 
 var hideChoices = function(){
@@ -85,7 +79,7 @@ var start = function(){
 var game = function(){
 
 	var timeLeft = setInterval(timer, 1000);
-    $(".question").text(triviaQuestions[0][0]);
+    $(".question").text(triviaMiami.triviaQuestions[0].one);
 
     choices();
 
@@ -101,10 +95,10 @@ var game = function(){
 
 //Sets the choices for the current question and displays the choices.
 var choices = function(){
-    $("[value='a1']").text(triviaQuestions[0][1]).show();
-	$("[value='a2']").text(triviaQuestions[0][2]).show();
-	$("[value='a3']").text(triviaQuestions[0][3]).show();
-	$("[value='a4']").text(triviaQuestions[0][4]).show();
+    $("[value='a1']").text(triviaMiami.triviaQuestions[0].choices[0]).show();
+	$("[value='a2']").text(triviaMiami.triviaQuestions[0].choices[1]).show();
+	$("[value='a3']").text(triviaMiami.triviaQuestions[0].choices[2]).show();
+	$("[value='a4']").text(triviaMiami.triviaQuestions[0].choices[3]).show();
 };
 
 
@@ -126,12 +120,12 @@ var evaluator = function(checkValue){
 
 var timer = function(stopTimer){
 
-	timeLeft -= 1;
+	triviaMiami.timeLeft -= 1;
 	
-	if(timeLeft > 0 )
+	if(triviaMiami.timeLeft > 0 )
 	{
-		document.getElementById("time").innerHTML = "Time Remaining: " + timeLeft;
-	} else if(timeLeft == 0){
+		document.getElementById("time").innerHTML = "Time Remaining: " + triviaMiami.timeLeft;
+	} else if(triviaMiami.timeLeft == 0){
 		document.getElementById("time").innerHTML = "You ran out of time!";
 		$(".question").text("The answer is: " + triviaQuestions[0][6]);
 		hideChoices();
