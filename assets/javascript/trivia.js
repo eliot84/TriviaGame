@@ -16,37 +16,69 @@ The Tequesta
 */
 //Default State
 
-var triviaQuestions = [ ["Miami is the home to which National Park?", "The Everglades", "Monroe", "Cocoplum", "The SawGrass", "a1"], 
-						["In Miami Beach, more than 800 buildings feature this iconic style of architecture:", "Gothic", "Revivalism", "Art Deco", "Streamline Moderne"]
+var triviaMiami = { 
+					timeLeft: 15,
+					scoreCorrect: 0,
+					totalQuestions: 10,
+					triviaQuestions: [{one: "Miami is the home to which National Park?",
+									   choices: ["The Everglades", "Monroe", "Cocoplum", "The Sawgrass"],
+									   correctChoice: "a1",
+									   answer: "The Everglades"
+									  }]	
+				  };
+
+
+//How to get the question
+console.log(triviaMiami.triviaQuestions[0].one);
+
+//how to get the choices
+console.log(triviaMiami.triviaQuestions[0].choices[0] + " " + triviaMiami.triviaQuestions[0].choices[1] + " " + triviaMiami.triviaQuestions[0].choices[2] + " " + triviaMiami.triviaQuestions[0].choices[3] );
+
+//Match the correct choice 
+console.log(triviaMiami.triviaQuestions[0].correctChoice);
+
+//the answer 
+console.log(triviaMiami.triviaQuestions[0].answer);
+
+var triviaQuestions = [ ["Miami is the home to which National Park?", "The Everglades", "Monroe", "Cocoplum", "The SawGrass", "a1", "The Everglades"], 
+						["In Miami Beach, more than 800 buildings feature this iconic style of architecture:", "Gothic", "Revivalism", "Art Deco", "Streamline Moderne", "Art Deco"]
 					  ];
 
 var timeLeft = 15;
+var scoreCorrect = 0;
+var totalQuestions = 10;
 
-	$(".start").show();
-    $("[value='a1']").hide();
+//hides choices from view 
+var hideChoices = function(){
+	$("[value='a1']").hide();
 	$("[value='a2']").hide();
 	$("[value='a3']").hide();
 	$("[value='a4']").hide();
-	$(".question").hide();
+}
+
+
+hideChoices();
+$(".start").show();
+$(".question").hide();
 
 
 
-
+//Listens for the start button press to begin
 $(".start").click(function(){
     start();
 });
+
+
 
 var start = function(){
     
     //Set interface for Game
     $(".start").hide();
-    $("[value='a1']").show();
-	$("[value='a2']").show();
-	$("[value='a3']").show();
-	$("[value='a4']").show();
+
 	$(".question").show();
 
     game();
+
 };
 
 
@@ -56,30 +88,39 @@ var game = function(){
     $(".question").text(triviaQuestions[0][0]);
 
     choices();
-	choiceListener();
+
+	$(".btn").click(function(){
+		var status = evaluator(this.value);
+		console.log(status);
+		//send for score
+		score(status);
+	});
+
 };
 
 
-
+//Sets the choices for the current question and displays the choices.
 var choices = function(){
-    $("[value='a1']").text(triviaQuestions[0][1]);
-	$("[value='a2']").text(triviaQuestions[0][2]);
-	$("[value='a3']").text(triviaQuestions[0][3]);
-	$("[value='a4']").text(triviaQuestions[0][4]);	
-}
+    $("[value='a1']").text(triviaQuestions[0][1]).show();
+	$("[value='a2']").text(triviaQuestions[0][2]).show();
+	$("[value='a3']").text(triviaQuestions[0][3]).show();
+	$("[value='a4']").text(triviaQuestions[0][4]).show();
+};
 
 
+//Checks if the answer selected is correct or incorrect
+var evaluator = function(checkValue){
 
-var choiceListener = function(){
-	$(".btn").click(function(){
-		console.log("you clicked me!");
+	if(checkValue == triviaQuestions[0][5]){
+		scoreCorrect += 1;
+			console.log(scoreCorrect);
+ 		return "correct";
+	}
+	else{
+		return "incorrect";
+	}
 
-		if(this.value == triviaQuestions[0][5]){
-			console.log("CORRECT!");
-		}
-
-	});
-}
+};
 
 
 
@@ -89,8 +130,30 @@ var timer = function(stopTimer){
 	
 	if(timeLeft > 0 )
 	{
-		document.getElementById("time").innerHTML = "Time Left is: " + timeLeft;
+		document.getElementById("time").innerHTML = "Time Remaining: " + timeLeft;
 	} else if(timeLeft == 0){
 		document.getElementById("time").innerHTML = "You ran out of time!";
+		$(".question").text("The answer is: " + triviaQuestions[0][6]);
+		hideChoices();
 	}
+
 };
+
+var score = function(result){
+	
+}
+
+
+var resetTrivia = function(){
+	triviaQuestions = [ ["Miami is the home to which National Park?", "The Everglades", "Monroe", "Cocoplum", "The SawGrass", "a1", "The Everglades"], 
+						["In Miami Beach, more than 800 buildings feature this iconic style of architecture:", "Gothic", "Revivalism", "Art Deco", "Streamline Moderne", "Art Deco"]
+					  ];
+
+ 	timeLeft = 15;
+ 	scoreCorrect = 0;
+ 	totalQuestions = 10;	
+}
+
+
+
+
