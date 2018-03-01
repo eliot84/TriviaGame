@@ -17,6 +17,7 @@ The Tequesta
 //Default State
 
 var triviaMiami = { 
+					//Properties
 					timeLeft: 15,
 					scoreCorrect: 0,
 					totalQuestions: 10,
@@ -25,8 +26,56 @@ var triviaMiami = {
 									   choices: ["The Everglades", "Monroe", "Cocoplum", "The Sawgrass"],
 									   correctChoice: "a1",
 									   answer: "The Everglades"
-									  }]	
-				  };
+									  }],
+					//Methods				  
+					speak: function(line){
+						console.log(line);
+					},
+
+ 					game: function(){
+
+					    //Set interface for Game
+	   				    $(".start").hide();
+		                $(".question").show();
+
+						var timeLeft = setInterval(timer, 1000);
+	  				    $(".question").text(triviaMiami.triviaQuestions[0].one);
+
+	  				    choices();
+
+						$(".btn").click(function(){
+							var status = triviaMiami.evaluator(this.value);
+							console.log(this.value + status);
+							//send for score
+							score(status);
+					});
+
+					},
+
+					evaluator: function(checkValue){
+						if(checkValue == triviaMiami.triviaQuestions[0].correctChoice){
+						triviaMiami.scoreCorrect += 1;
+						console.log(triviaMiami.scoreCorrect);
+ 						return "correct";
+						}
+						else{
+							return "incorrect";
+						}
+					},
+
+
+
+
+					resetTrivia: function(){
+						triviaQuestions = [ ["Miami is the home to which National Park?", "The Everglades", "Monroe", "Cocoplum", "The SawGrass", "a1", "The Everglades"], 
+											["In Miami Beach, more than 800 buildings feature this iconic style of architecture:", "Gothic", "Revivalism", "Art Deco", "Streamline Moderne", "Art Deco"]
+					  					  ];
+
+					 	timeLeft = 15;
+					 	scoreCorrect = 0;
+					 	totalQuestions = 10;	
+					}
+}; //Close Object
 
 
 //How to get the question
@@ -59,38 +108,11 @@ $(".question").hide();
 
 //Listens for the start button press to begin
 $(".start").click(function(){
-    start();
+    triviaMiami.game();
 });
 
 
 
-var start = function(){
-    
-    //Set interface for Game
-    $(".start").hide();
-
-	$(".question").show();
-
-    game();
-
-};
-
-
-var game = function(){
-
-	var timeLeft = setInterval(timer, 1000);
-    $(".question").text(triviaMiami.triviaQuestions[0].one);
-
-    choices();
-
-	$(".btn").click(function(){
-		var status = evaluator(this.value);
-		console.log(status);
-		//send for score
-		score(status);
-	});
-
-};
 
 
 //Sets the choices for the current question and displays the choices.
@@ -103,7 +125,7 @@ var choices = function(){
 
 
 //Checks if the answer selected is correct or incorrect
-var evaluator = function(checkValue){
+/*var evaluator = function(checkValue){
 
 	if(checkValue == triviaQuestions[0][5]){
 		scoreCorrect += 1;
@@ -114,7 +136,7 @@ var evaluator = function(checkValue){
 		return "incorrect";
 	}
 
-};
+}; */
 
 
 
@@ -127,7 +149,7 @@ var timer = function(stopTimer){
 		document.getElementById("time").innerHTML = "Time Remaining: " + triviaMiami.timeLeft;
 	} else if(triviaMiami.timeLeft == 0){
 		document.getElementById("time").innerHTML = "You ran out of time!";
-		$(".question").text("The answer is: " + triviaQuestions[0][6]);
+		$(".question").text("The answer is: " + triviaMiami.triviaQuestions[0].answer);
 		hideChoices();
 	}
 
