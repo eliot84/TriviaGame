@@ -8,6 +8,7 @@ $(".start").click(function(){
 	 //Set display GUI
 	$(".start").hide();
     $(".question").show();
+    $(".meme").hide();
 
     //set timer
 	var timeLeft = setInterval(triviaMiami.timer, 1000);
@@ -23,16 +24,17 @@ $(".start").click(function(){
 
 		//evaluate and update score
 		var status = triviaMiami.evaluator(this.value);
+		triviaMiami.qSummaryResult = status;
+
+		var resultSection = setInterval(triviaMiami.questionSummary, 1000);
 		
-		//if user answered correct
-		if(status){
-			$(".question").text(triviaMiami.triviaQuestions[0].answer + " is correct!");
-		}
-		else{
-			$(".question").text("Wrong, the correct answer is: " + triviaMiami.triviaQuestions[0].answer);
-		}
+
+	
+	
 
 
+
+//../images/miami.jpg"
 		//set timer for 4 - 6 seconds
 		//hide choices & question
 		//display guess correct or incorrect with correct answer

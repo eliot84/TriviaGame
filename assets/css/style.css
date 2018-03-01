@@ -13,8 +13,8 @@ body{
 	margin-left: auto;
 	margin-top: 100px;
 	padding-top: 280px;
-			    opacity: .8;
-
+    background-color: rgba(192,199,206, .5);
+	//color: white;
 	        border-radius: 25px;
 
 
@@ -26,6 +26,11 @@ body{
 	margin-right: auto;
 		    opacity: .9;
 		        z-index: 2;
+}
 
+.meme{
+	height: 240px;
+	width: 320px;
+		background-size: cover;
 
 }

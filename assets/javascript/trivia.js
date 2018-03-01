@@ -19,13 +19,16 @@ The Tequesta
 var triviaMiami = { 
 					//Properties
 					timeLeft: 15,
+					qSummaryTime: 5,
+					qSummaryResult: false,
 					scoreCorrect: 0,
 					totalQuestions: 10,
 					currQuestion: 0,
 					triviaQuestions: [{one: "Miami is the home to which National Park?",
 									   choices: ["The Everglades", "Monroe", "Cocoplum", "The Sawgrass"],
 									   correctChoice: "a1",
-									   answer: "The Everglades"
+									   answer: "The Everglades",
+									   meme: "assets/images/everglades.gif"
 									  }],
 					//Methods				  
 					speak: function(line){
@@ -40,6 +43,26 @@ var triviaMiami = {
 						$("[value='a4']").text(triviaMiami.triviaQuestions[0].choices[3]).show();
 					},
 
+					hideChoices: function(){
+					    $("[value='a1']").text(triviaMiami.triviaQuestions[0].choices[0]).hide();
+						$("[value='a2']").text(triviaMiami.triviaQuestions[0].choices[1]).hide();
+						$("[value='a3']").text(triviaMiami.triviaQuestions[0].choices[2]).hide();
+						$("[value='a4']").text(triviaMiami.triviaQuestions[0].choices[3]).hide();
+					},
+
+					timer: function(stopTimer){
+						triviaMiami.timeLeft -= 1;
+			
+						if(triviaMiami.timeLeft > 0 )
+						{
+							document.getElementById("time").innerHTML = "Time Remaining: " + triviaMiami.timeLeft;
+						} else if(triviaMiami.timeLeft == 0){
+							document.getElementById("time").innerHTML = "You ran out of time!";
+							$(".question").text("The answer is: " + triviaMiami.triviaQuestions[0].answer);
+							hideChoices();
+						}
+					},
+
 					//checks if user guessed correct and adds score
 					evaluator: function(checkValue){
 						if(checkValue == triviaMiami.triviaQuestions[0].correctChoice){
@@ -51,21 +74,28 @@ var triviaMiami = {
 							return false;
 						}
 					},
+					//displays the meme and provides user with feedback on their choice
+					questionSummary: function(){
+						triviaMiami.qSummaryTime -= 1;
+						console.log(triviaMiami.qSummaryTime);
 
-					timer: function(stopTimer){
-						triviaMiami.timeLeft -= 1;
-	
-						if(triviaMiami.timeLeft > 0 )
+						$('.meme').css("background-image", "url(" + triviaMiami.triviaQuestions[0].meme + ")");  
+						
+						if(triviaMiami.qSummaryResult){
+							$(".question").text(triviaMiami.triviaQuestions[0].answer + " is correct!");
+						}
+						else{
+							$(".question").text("Wrong, the correct answer is: " + triviaMiami.triviaQuestions[0].answer);
+						}
+
+						$('.meme').show();
+						triviaMiami.hideChoices();
+
+						if(triviaMiami.qSummaryTime < 0)
 						{
-							document.getElementById("time").innerHTML = "Time Remaining: " + triviaMiami.timeLeft;
-						} else if(triviaMiami.timeLeft == 0){
-							document.getElementById("time").innerHTML = "You ran out of time!";
-							$(".question").text("The answer is: " + triviaMiami.triviaQuestions[0].answer);
-							hideChoices();
+							clearTimeout(resultSection);
 						}
 					},
-
-
 
 					resetTrivia: function(){
 						triviaQuestions = [ ["Miami is the home to which National Park?", "The Everglades", "Monroe", "Cocoplum", "The SawGrass", "a1", "The Everglades"], 
