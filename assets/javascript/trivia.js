@@ -32,37 +32,38 @@ var triviaMiami = {
 						console.log(line);
 					},
 
- 					game: function(){
-
-					    //Set interface for Game
-	   				    $(".start").hide();
-		                $(".question").show();
-
-						var timeLeft = setInterval(timer, 1000);
-	  				    $(".question").text(triviaMiami.triviaQuestions[0].one);
-
-	  				    choices();
-
-						$(".btn").click(function(){
-							var status = triviaMiami.evaluator(this.value);
-							console.log(this.value + status);
-							//send for score
-							score(status);
-					});
-
+					//Sets the choices for the current question and displays the choices.
+				    showChoices: function(){
+					    $("[value='a1']").text(triviaMiami.triviaQuestions[0].choices[0]).show();
+						$("[value='a2']").text(triviaMiami.triviaQuestions[0].choices[1]).show();
+						$("[value='a3']").text(triviaMiami.triviaQuestions[0].choices[2]).show();
+						$("[value='a4']").text(triviaMiami.triviaQuestions[0].choices[3]).show();
 					},
 
+					//checks if user guessed correct and adds score
 					evaluator: function(checkValue){
 						if(checkValue == triviaMiami.triviaQuestions[0].correctChoice){
 						triviaMiami.scoreCorrect += 1;
-						console.log(triviaMiami.scoreCorrect);
- 						return "correct";
+ 						return true;
 						}
 						else{
-							return "incorrect";
+							console.log("wrong");
+							return false;
 						}
 					},
 
+					timer: function(stopTimer){
+						triviaMiami.timeLeft -= 1;
+	
+						if(triviaMiami.timeLeft > 0 )
+						{
+							document.getElementById("time").innerHTML = "Time Remaining: " + triviaMiami.timeLeft;
+						} else if(triviaMiami.timeLeft == 0){
+							document.getElementById("time").innerHTML = "You ran out of time!";
+							$(".question").text("The answer is: " + triviaMiami.triviaQuestions[0].answer);
+							hideChoices();
+						}
+					},
 
 
 
@@ -106,58 +107,15 @@ $(".question").hide();
 
 
 
-//Listens for the start button press to begin
-$(".start").click(function(){
-    triviaMiami.game();
-});
 
 
 
 
 
-//Sets the choices for the current question and displays the choices.
-var choices = function(){
-    $("[value='a1']").text(triviaMiami.triviaQuestions[0].choices[0]).show();
-	$("[value='a2']").text(triviaMiami.triviaQuestions[0].choices[1]).show();
-	$("[value='a3']").text(triviaMiami.triviaQuestions[0].choices[2]).show();
-	$("[value='a4']").text(triviaMiami.triviaQuestions[0].choices[3]).show();
-};
-
-
-//Checks if the answer selected is correct or incorrect
-/*var evaluator = function(checkValue){
-
-	if(checkValue == triviaQuestions[0][5]){
-		scoreCorrect += 1;
-			console.log(scoreCorrect);
- 		return "correct";
-	}
-	else{
-		return "incorrect";
-	}
-
-}; */
 
 
 
-var timer = function(stopTimer){
 
-	triviaMiami.timeLeft -= 1;
-	
-	if(triviaMiami.timeLeft > 0 )
-	{
-		document.getElementById("time").innerHTML = "Time Remaining: " + triviaMiami.timeLeft;
-	} else if(triviaMiami.timeLeft == 0){
-		document.getElementById("time").innerHTML = "You ran out of time!";
-		$(".question").text("The answer is: " + triviaMiami.triviaQuestions[0].answer);
-		hideChoices();
-	}
-
-};
-
-var score = function(result){
-	
-}
 
 
 var resetTrivia = function(){
