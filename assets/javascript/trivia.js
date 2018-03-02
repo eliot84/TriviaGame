@@ -40,7 +40,7 @@ var triviaMiami = {
 									   choices: ["The Miccosukee", "The Seminoles", "The Tequesta", "The Taino"],
 									   correctChoice: "a3",
 									   answer: "The Tequesta",
-									   meme: "assets/images/miamiCircle.jpg"
+									   meme: "assets/images/ace.gif"
 									  },
 									  {question: "The only movie to have scenes filmed in Miami that has won an Academy Award for best picture is?:",
 									   choices: ["The Golden Girls", "Scarface", "Dexter", "The Godfather II"],
@@ -91,6 +91,8 @@ var triviaMiami = {
 						$(".start").hide();
 					    $(".question").show();
 					    $(".meme").hide();
+					    $("#playBtn").show();
+					    $("#pauseBtn").show();
 
 					    //set timer
 						var time = setInterval(triviaMiami.timer, 1000);
@@ -169,12 +171,11 @@ var triviaMiami = {
 							triviaMiami.nextQuestion();
 						}
 
-						setTimeout(stopper, 5000);
+						setTimeout(stopper, 7000);
 					},
 
 						//If a question is answered do the following
 					questionNotAnswered: function(){
-						console.log("question ")
 						//evaluate and update score
 				 		var timeThis = setInterval(triviaMiami.questionSummary, 1000);
 					
@@ -184,13 +185,14 @@ var triviaMiami = {
 							triviaMiami.nextQuestion();
 						}
 
-						setTimeout(stopper, 5000);
+						setTimeout(stopper, 7000);
 					},
 
 					//displays the meme and provides user with feedback on their choice or nonchoice
-					questionSummary: function(){			
+					questionSummary: function(){	
+						$('.meme').css("background-image", "url(" + triviaMiami.triviaQuestions[triviaMiami.currQuestion].meme + ")");  
+		
 						if(triviaMiami.questionDone){
-							$('.meme').css("background-image", "url(" + triviaMiami.triviaQuestions[triviaMiami.currQuestion].meme + ")");  
 							
 							if(triviaMiami.qSummaryResult){
 								//triviaMiami.scoreCorrect += 1;
@@ -231,7 +233,7 @@ var triviaMiami = {
 							$("#time").text("GAME OVER!!");
 							$(".question").text("You scored: " + triviaMiami.scoreCorrect +  " out of 10");
 							hideChoices();
-							$("#meme").hide();
+							$(".meme").hide();
 
 					},
 				
@@ -244,21 +246,6 @@ var triviaMiami = {
 }; //Close Object
 
 
-/*
-//How to get the question
-console.log(triviaMiami.triviaQuestions[0].one);
-
-//how to get the choices
-console.log(triviaMiami.triviaQuestions[0].choices[0] + " " + triviaMiami.triviaQuestions[0].choices[1] + " " + triviaMiami.triviaQuestions[0].choices[2] + " " + triviaMiami.triviaQuestions[0].choices[3] );
-
-//Match the correct choice 
-console.log(triviaMiami.triviaQuestions[0].correctChoice);
-
-//the answer 
-console.log(triviaMiami.triviaQuestions[0].answer);
-*/
-
-//hides choices from view 
 
 
 

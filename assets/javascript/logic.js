@@ -1,5 +1,3 @@
-console.log("logic!");
-
 $(document).ready(function()
 {
 	triviaMiami.hideChoices();
