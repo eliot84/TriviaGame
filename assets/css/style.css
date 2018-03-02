@@ -12,12 +12,21 @@ body{
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 100px;
-	padding-top: 280px;
+	padding-top: 100px;
     background-color: rgba(192,199,206, .5);
-	//color: white;
+	color: white;
 	        border-radius: 25px;
+}
 
+.holder{
+	width: 70%;
+	margin-right: auto;
+	margin-left: auto;
+}
 
+.btnC{
+	margin-right: 10px;
+	margin-bottom: 10px;
 }
 
 .start{
@@ -31,6 +40,13 @@ body{
 .meme{
 	height: 240px;
 	width: 320px;
-		background-size: cover;
+	padding: 50px;
+	border-width: 20px;
+	background-size: cover;
 
+}
+
+#time{
+	margin-left: auto;
+	margin-right: auto;
 }
